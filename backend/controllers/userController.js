@@ -1,8 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const { comparePassword } = require('../services/auth/passwordService')
 
-const User = require('../models/userModel')
-
 const { findByEmail: findUserByEmail, insert: createUser } = require('../repositories/userRepository')
 
 const { generateToken } = require('../services/auth/tokenService')
@@ -40,8 +38,6 @@ const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
 
   const user = await findUserByEmail(email)
-
-  console.log(user)
 
   if (user && await comparePassword(password, user)) {
     res.status(200)
